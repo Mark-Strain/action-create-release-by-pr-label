@@ -44,9 +44,15 @@ internal class Program
 
             var pullRequest = await client.Repository.PullRequest.Get(owner, repoName, actionInputs.PullRequestNumber);
 
-            if(pullRequest == null)
+            if (pullRequest == null)
             {
                 Console.WriteLine($"Error: Could not find pull request with number: {actionInputs.PullRequestNumber}.");
+                return -2;
+            }
+
+            if (pullRequest.Labels == null || pullRequest.Labels.Count == 0)
+            {
+                Console.WriteLine($"Error: No labels are applied to pullrequest #{actionInputs.PullRequestNumber}.");
                 return -2;
             }
 
@@ -57,7 +63,7 @@ internal class Program
 
             if (label == null)
             {
-                Console.WriteLine("Error: Label not found.");
+                Console.WriteLine("Error: 'Major', 'Minor' or 'Patch' label not found.");
                 return -2;
             }
 
