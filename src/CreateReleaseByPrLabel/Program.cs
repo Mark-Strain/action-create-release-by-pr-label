@@ -37,7 +37,7 @@ internal class Program
             string owner = repo.Split("/")[0];
             string repoName = repo.Split("/")[1];
 
-            GitHubClient client = new(new ProductHeaderValue("create-release-action"))
+            GitHubClient client = new(new ProductHeaderValue("create-release-by-pr-label"))
             {
                 Credentials = new Credentials(actionInputs.Token)
             };
