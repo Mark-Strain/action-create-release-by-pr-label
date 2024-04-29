@@ -1,0 +1,22 @@
+name: 'Create Release By PR Label'
+description: 'GitHub action that will create a new release based on a PR label.'
+branding:
+  icon: file-plus
+  color: purple
+inputs:
+  token:
+    description:
+      'Authentication token, use either GITHUB_TOKEN or a Personal Access Token.'
+    required: true
+  pullRequestNumber:
+    description:
+      'Pull Request Number, use the number for the triggering pull request.'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+  - '--token'
+  - ${{ inputs.token }}
+  - '--pullRequestNumber'
+  - ${{ inputs.pullRequestNumber }}
