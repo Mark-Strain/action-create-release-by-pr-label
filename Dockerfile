@@ -7,13 +7,11 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/CreateReleaseByPrLabel/CreateReleaseByPrLabel.csproj", "src/CreateReleaseByPrLabel/"]
 RUN dotnet restore "./src/CreateReleaseByPrLabel/CreateReleaseByPrLabel.csproj"
-COPY . .
-WORKDIR "/src/src/CreateReleaseByPrLabel"
-RUN dotnet build "./CreateReleaseByPrLabel.csproj" -c $BUILD_CONFIGURATION -o /app/build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 as build-env
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./CreateReleaseByPrLabel.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+WORKDIR /app
+COPY . ./
+RUN dotnet publish ./src/CreateReleaseByPrLabel/CreateReleaseByPrLabel.csproj -c Release -o out --no-self-contained
 
 # Label the container
 LABEL maintainer="Mark S"
@@ -26,7 +24,7 @@ LABEL com.github.actions.description="GitHub action that will create a new relea
 LABEL com.github.actions.icon="file-plus"
 LABEL com.github.actions.color="purple"
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CreateReleaseByPrLabel.dll"]
+# Relayer the .NET SDK, anew with the build output
+FROM mcr.microsoft.com/dotnet/sdk:8.0
+COPY --from=build-env /app/out .
+ENTRYPOINT [ "dotnet", "/CreateReleaseByPrLabel.dll" ]
