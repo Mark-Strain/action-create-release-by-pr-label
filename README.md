@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![.NET 6.0](https://img.shields.io/badge/Version-.NET%206.0-informational?style=flat&logo=dotnet)
+![.NET 6.0](https://img.shields.io/badge/Version-.NET%208.0-informational?style=flat&logo=dotnet)
 &nbsp;
 ![Built With Docker](https://img.shields.io/badge/Built_With-Docker-informational?style=flat&logo=docker)
 &nbsp;
