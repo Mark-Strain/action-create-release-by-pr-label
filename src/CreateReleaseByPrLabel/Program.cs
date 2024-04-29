@@ -110,7 +110,7 @@ internal class Program
 
     private static string GetUpdatedVersionNumber(string currentVersion, string label)
     {
-        currentVersion += currentVersion.Trim('v');
+        currentVersion = currentVersion.Trim('v');
 
         var versionArray = currentVersion.Split('.');
         var major = Convert.ToInt16(versionArray[0]);
