@@ -76,11 +76,6 @@ internal class Program
                 currentVersion = releases[0].TagName;
             }
 
-            foreach(var release in releases)
-            {
-                Console.WriteLine(release.TagName);
-            }
-
             var updatedVersion = GetUpdatedVersionNumber(currentVersion, label.Name);
 
             var newRelease = new NewRelease($"v{updatedVersion}");
