@@ -67,9 +67,14 @@ internal class Program
                 return -2;
             }
 
-            var release = await client.Repository.Release.GetLatest(owner, repoName);
+            var releases = await client.Repository.Release.GetAll(owner, repoName);
 
-            var currentVersion = release == null ? "0.0.0" : release.TagName;
+            var currentVersion = "0.0.0";
+
+            if (releases != null && releases.Count > 0)
+            {
+                currentVersion = releases[0].TagName;
+            }
 
             var updatedVersion = GetUpdatedVersionNumber(currentVersion, label.Name);
 
