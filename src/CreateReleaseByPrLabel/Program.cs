@@ -87,7 +87,7 @@ internal class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error: {ex.GetType()} - {ex.Message} \n {ex.InnerException}");
+            Console.WriteLine($"Error: {ex.GetType()} - {ex.Message} \n {ex}");
             return -3;
         }
     }
